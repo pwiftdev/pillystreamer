@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pilly · Broadcast overlay</title>
+    <link rel="icon" href="/pilly.png" />
+    <link rel="stylesheet" href="/broadcast.css" />
+    <script src="/capture-socket/socket.io.js"></script>
+    <script type="module" src="/broadcast.js"></script>
+  </head>
+  <body>
+    <main id="stage" aria-label="Pilly stream overlay">
+      <video id="native-video" autoplay muted playsinline hidden></video>
+      <div id="capture-waiting" hidden>
+        Open the studio and click <b>Share Minecraft to overlay</b>, then choose
+        the Minecraft window.
+      </div>
+      <iframe
+        id="game-view"
+        title="Pilly’s live Minecraft view"
+        hidden
+      ></iframe>
+      <div id="game-waiting" hidden>
+        <span class="eyebrow">A LITTLE BREATHER</span>
+        <h1>brb, touching grass.</h1>
+        <p id="waiting-detail">Waiting for Pilly to join Minecraft.</p>
+      </div>
+      <div id="pilly-cam" hidden>
+        <div
+          id="live-room"
+          role="img"
+          aria-label="Pilly seated at his desk in the live room"
+        ></div>
+        <div class="cam-footer">
+          <div class="cam-identity">
+            <span class="cam-dot"></span><b>pilly</b
+            ><span>your local degen</span>
+          </div>
+          <div class="cam-voice">
+            <span id="cam-status">just vibing</span
+            ><span class="equalizer" aria-hidden="true"
+              ><i></i><i></i><i></i><i></i
+            ></span>
+          </div>
+        </div>
+      </div>
+      <p id="scene-error" role="alert" hidden>
+        Could not load Pilly’s camera. Reload to try again.
+      </p>
+      <div class="brand">
+        <span class="brand-mark">P</span>
+        <span
+          ><strong
+            >pilly<span class="brand-slash"> / </span
+            ><span class="brand-world">Pumpville</span></strong
+          ><span class="brand-sub">ZERO BAGS. ALL BLOCKS.</span></span
+        >
+      </div>
+      <div id="connection" class="connection">
+        <span class="status-dot"></span><b id="connection-label">CONNECTING</b
+        ><span class="connection-game">MINECRAFT</span>
+      </div>
+      <button id="voice-toggle" class="voice-toggle" hidden>
+        Enable Pilly’s voice
+      </button>
+      <div class="hud">
+        <section
+          id="vitals"
+          class="vitals"
+          aria-label="Player condition"
+          hidden
+        >
+          <div class="vital health-vital">
+            <div class="vital-heading">
+              <span id="health-label">Health</span
+              ><span><b id="health">—</b><small> / 20</small></span>
+            </div>
+            <div
+              id="health-meter"
+              class="vital-meter"
+              role="meter"
+              aria-label="Health"
+              aria-valuemin="0"
+              aria-valuemax="20"
+              aria-valuenow="0"
+            ></div>
+          </div>
+          <div class="vital food-vital">
+            <div class="vital-heading">
+              <span id="food-label">Hunger</span
+              ><span><b id="food">—</b><small> / 20</small></span>
+            </div>
+            <div
+              id="food-meter"
+              class="vital-meter"
+              role="meter"
+              aria-label="Hunger"
+              aria-valuemin="0"
+              aria-valuemax="20"
+              aria-valuenow="0"
+            ></div>
+          </div>
+        </section>
+        <section id="objective" class="objective">
+          <div class="mission-heading">
+            <span class="eyebrow">ROAD TO PUMPVILLE</span
+            ><span id="mission-badge">WARMING UP</span>
+          </div>
+          <p id="objective-text">Waiting for Pilly</p>
+          <p id="objective-detail">Every town starts somewhere.</p>
+          <p id="town-thought" hidden></p>
+          <div
+            id="progress-track"
+            role="progressbar"
+            aria-label="Wood collected"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <div id="progress"></div>
+          </div>
+          <div
+            id="mission-steps"
+            class="mission-steps"
+            aria-label="Mission steps"
+          >
+            <span>Gather</span><span>Craft</span><span>Head home</span>
+          </div>
+        </section>
+      </div>
+      <section id="character" class="character">
+        <div id="caption" class="caption" hidden>
+          <span class="caption-label">pilly says</span>
+          <p id="caption-text"></p>
+        </div>
+        <div id="sprite" role="img" aria-label="Animated Pilly mascot"></div>
+        <div class="nameplate">
+          pilly<span>LOST MY BAGS. FOUND SOME BLOCKS.</span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

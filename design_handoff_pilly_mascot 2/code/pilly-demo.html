@@ -1,0 +1,11 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Pilly sprite demo</title>
+<style>body{margin:0;display:grid;place-items:center;min-height:100vh;background:#EEF3F1;font:14px monospace}#s{width:360px}select{margin-top:16px}</style></head>
+<body><div><div id="s"></div><select id="r"></select></div>
+<script type="module">
+import { renderPilly, REACTIONS, reactionFrame } from './pilly-sprite.js';
+const s = document.getElementById('s'), sel = document.getElementById('r');
+Object.entries(REACTIONS).forEach(([id, r]) => sel.add(new Option(r.label + ' (' + r.cue + ')', id)));
+let i = 0, last = 0;
+function tick(ts) { const r = REACTIONS[sel.value]; if (ts - last >= r.frameMs) { last = ts; s.innerHTML = renderPilly(reactionFrame(sel.value, i++)); } requestAnimationFrame(tick); }
+requestAnimationFrame(tick);
+</script></body></html>

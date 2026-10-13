@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pilly · Stream studio</title>
+    <link rel="icon" href="/pilly.png" />
+    <link rel="stylesheet" href="/studio.css" />
+    <script src="/capture-socket/socket.io.js"></script>
+    <script type="module" src="/studio.js"></script>
+    <script type="module" src="/chat.js"></script>
+    <script type="module" src="/voice-controls.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="wordmark" href="/"
+        ><span class="logo">P</span>pilly<span class="studio-tag"
+          >STREAM STUDIO</span
+        ></a
+      >
+      <div class="top-actions">
+        <span id="service-status" class="status">Connecting</span
+        ><a class="button quiet" href="/overlay" target="_blank" rel="noopener"
+          >Open overlay <span aria-hidden="true">↗</span></a
+        ><button id="copy-url" class="button primary">Copy OBS link</button>
+      </div>
+    </header>
+    <main>
+      <div class="intro">
+        <div>
+          <span class="eyebrow">ONE LITTLE CAPSULE. BIG ADVENTURES.</span>
+          <h1>Pilly, on air<span>.</span></h1>
+          <p>
+            Welcome to Pilly’s live room. Settle in, pick a mood, and let him do
+            his thing.
+          </p>
+        </div>
+        <div class="edition">
+          <span class="edition-square"></span> MINECRAFT EDITION
+          <small>01 / LOCAL STUDIO</small>
+        </div>
+      </div>
+      <div class="workspace">
+        <section class="preview-panel" aria-labelledby="preview-title">
+          <div class="panel-heading">
+            <h2 id="preview-title">
+              <span class="small-square"></span>Stage preview
+            </h2>
+            <span class="meta">1920 × 1080</span>
+          </div>
+          <div id="preview" class="preview checker">
+            <video id="game-video" autoplay muted playsinline hidden></video>
+            <div id="preview-guide">
+              <span class="corner tl"></span><span class="corner tr"></span
+              ><span class="corner bl"></span><span class="corner br"></span>
+              <div class="guide-mark">+</div>
+              <strong>A world of possibilities.</strong>
+              <p>
+                Your Minecraft POV sits behind Pilly.<br />Choose the Minecraft
+                window below.<br />In OBS, capture Minecraft beneath this
+                overlay.
+              </p>
+            </div>
+            <iframe
+              id="overlay-preview"
+              src="/overlay?muted=1&amp;preview=1"
+              allow="autoplay"
+              title="Live Pilly overlay preview"
+            ></iframe>
+          </div>
+          <div class="preview-footer">
+            <div
+              class="background-options"
+              role="group"
+              aria-label="Preview background"
+            >
+              <span>BACKDROP</span
+              ><button
+                class="swatch checker active"
+                data-background="checker"
+                aria-label="Checkerboard background"
+                aria-pressed="true"
+              ></button
+              ><button
+                class="swatch forest"
+                data-background="forest"
+                aria-label="Dark background"
+                aria-pressed="false"
+              ></button
+              ><button
+                class="swatch paper"
+                data-background="paper"
+                aria-label="Light background"
+                aria-pressed="false"
+              ></button>
+            </div>
+            <button id="capture" class="text-button">
+              Share Minecraft to overlay <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+          <div class="connection-strip">
+            <span class="status-dot" id="bot-dot"></span>
+            <div>
+              <strong id="bot-status">Waiting for the bot</strong
+              ><span id="bot-objective"
+                >The overlay works while Pilly is offline, too.</span
+              >
+            </div>
+            <span class="connection-label">GAME CONNECTION</span>
+          </div>
+        </section>
+        <aside class="appearance panel" aria-labelledby="appearance-title">
+          <div class="panel-heading">
+            <h2 id="appearance-title">Make it yours</h2>
+            <span class="meta">APPEARANCE</span>
+          </div>
+          <form id="settings-form">
+            <fieldset>
+              <legend>Scene</legend>
+              <div class="segments">
+                <label
+                  ><input type="radio" name="scene" value="game" checked /><span
+                    >Browser preview</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="scene" value="native" /><span
+                    >Native Minecraft + cam</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="scene" value="room" /><span
+                    >Live room</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="scene" value="sprite" /><span
+                    >Transparent mascot</span
+                  ></label
+                >
+              </div>
+            </fieldset>
+            <fieldset id="speech-controls">
+              <legend>Speech animation</legend>
+              <div class="segments">
+                <label
+                  ><input type="radio" name="speech" value="off" checked /><span
+                    >Silent</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="speech" value="demo" /><span
+                    >Preview speech</span
+                  ></label
+                >
+              </div>
+              <p class="setting-note">
+                Preview mouth movement and gestures. No audio plays.
+              </p>
+            </fieldset>
+            <fieldset>
+              <legend>Headphones</legend>
+              <div class="headphones">
+                <label
+                  ><input
+                    type="radio"
+                    name="headphones"
+                    value="Green"
+                    checked
+                  /><span><i class="green-dot"></i>Green</span></label
+                ><label
+                  ><input type="radio" name="headphones" value="Pine" /><span
+                    ><i class="pine-dot"></i>Pine</span
+                  ></label
+                ><label
+                  ><input type="radio" name="headphones" value="Rose" /><span
+                    ><i class="rose-dot"></i>Rose</span
+                  ></label
+                >
+              </div>
+            </fieldset>
+            <fieldset id="sprite-controls">
+              <legend>Transparent mascot layout</legend>
+              <div class="setting-row">
+                <label for="scale">Character size</label
+                ><output id="scale-value" for="scale">5×</output>
+              </div>
+              <input
+                id="scale"
+                type="range"
+                name="scale"
+                min="3"
+                max="7"
+                step="1"
+                value="5"
+              />
+              <div class="range-labels">
+                <span>SMALL</span><span>LARGE</span>
+              </div>
+              <fieldset class="position-field">
+                <legend>On-screen position</legend>
+                <div class="segments">
+                  <label
+                    ><input type="radio" name="side" value="left" /><span
+                      >Bottom left</span
+                    ></label
+                  ><label
+                    ><input
+                      type="radio"
+                      name="side"
+                      value="right"
+                      checked
+                    /><span>Bottom right</span></label
+                  >
+                </div>
+              </fieldset>
+              <div class="toggles">
+                <label
+                  >White sticker border<input name="sticker" type="checkbox"
+                /></label>
+              </div>
+            </fieldset>
+            <div class="toggles">
+              <label
+                >Current objective<input
+                  name="showObjective"
+                  type="checkbox"
+                  checked /></label
+              ><label
+                >Health &amp; food<input
+                  name="showVitals"
+                  type="checkbox"
+                  checked /></label
+              ><label
+                >Captions<input name="showCaptions" type="checkbox" checked
+              /></label>
+            </div>
+          </form>
+          <div class="pixel-note">
+            <span class="small-square"></span>Same Pilly. Every pixel intact.
+          </div>
+        </aside>
+      </div>
+      <div class="bottom-grid voice-workspace">
+        <section class="panel" aria-labelledby="voice-title">
+          <div class="panel-heading">
+            <h2 id="voice-title">A voice for Pilly</h2>
+            <span class="meta">ELEVENLABS</span>
+          </div>
+          <div class="panel-body">
+            <p>
+              Lost his bags. Found some blocks. Pilly is a joyful, slightly
+              degen beginner building toward Pumpville, a Minecraft town for his
+              community.
+            </p>
+            <div class="toggles">
+              <label
+                >Voice enabled<input id="voice-enabled" type="checkbox"
+              /></label>
+              <label
+                >Automatic gameplay commentary<input
+                  id="voice-auto"
+                  type="checkbox"
+                  checked
+              /></label>
+            </div>
+            <div class="voice-actions">
+              <button id="voice-intro" class="button primary">
+                Introduce Pilly</button
+              ><button
+                id="preview-sound"
+                class="button quiet"
+                aria-pressed="false"
+              >
+                Hear Pilly
+              </button>
+            </div>
+            <p id="voice-status" role="status">Connecting…</p>
+            <p class="setting-note">
+              Preview starts muted. OBS plays the voice from /overlay. Turning
+              voice off cancels speech and queued replies. Gameplay and chat
+              suggestions keep going.
+            </p>
+          </div>
+        </section>
+        <section class="panel chat-panel" aria-labelledby="chat-title">
+          <div class="panel-heading">
+            <h2 id="chat-title">Talk to Pilly</h2>
+            <a class="text-button" href="/chat" target="_blank" rel="noopener"
+              >Open viewer page</a
+            >
+          </div>
+          <div class="panel-body">
+            <ol
+              id="chat-history"
+              class="chat-history"
+              aria-live="polite"
+              aria-relevant="additions"
+            ></ol>
+            <form id="chat-form">
+              <label class="sr-only" for="chat-input">Question for Pilly</label>
+              <div class="input-row">
+                <input
+                  id="chat-input"
+                  maxlength="300"
+                  required
+                  autocomplete="off"
+                  placeholder="What is Pumpville?"
+                /><button class="button primary" type="submit">Send</button>
+              </div>
+            </form>
+            <p id="chat-status" role="status">Connecting to Pilly…</p>
+            <p class="setting-note">
+              Questions are shared in website chat and sent to ElevenLabs.
+              $PILLY is not live yet.
+            </p>
+          </div>
+        </section>
+      </div>
+      <section class="reactions-section" aria-labelledby="reactions-title">
+        <div class="section-title">
+          <div>
+            <span class="eyebrow">A MOOD FOR EVERY MOMENT</span>
+            <h2 id="reactions-title">A little more animated.</h2>
+          </div>
+          <button id="reset" class="button quiet">Back to idle</button>
+        </div>
+        <div id="reactions" class="reaction-grid"></div>
+        <p id="reaction-note" class="section-note">
+          Tap a reaction to play it once, then return to idle. Reactions also
+          follow Pilly’s gameplay.
+        </p>
+      </section>
+      <div class="bottom-grid">
+        <section class="panel expression-panel">
+          <div class="panel-heading">
+            <h2>Resting Pilly face</h2>
+            <span class="meta">30 EXPRESSIONS</span>
+          </div>
+          <div class="panel-body">
+            <p>Pick the expression he returns to between reactions.</p>
+            <label class="sr-only" for="expression">Idle expression</label
+            ><select id="expression"></select>
+          </div>
+        </section>
+        <section class="panel caption-panel">
+          <div class="panel-heading">
+            <h2>A word from Pilly</h2>
+            <span class="meta">CAPTION PREVIEW</span>
+          </div>
+          <form id="caption-form" class="panel-body">
+            <label class="sr-only" for="caption-input">Caption text</label>
+            <div class="input-row">
+              <input
+                id="caption-input"
+                maxlength="180"
+                placeholder="A little wood. A big plan."
+                autocomplete="off"
+                required
+              /><button class="button primary" type="submit">
+                Show caption
+              </button>
+            </div>
+            <p>Visible for 10 seconds. Captions do not generate audio.</p>
+          </form>
+        </section>
+      </div>
+      <section class="obs-note">
+        <div class="obs-number">01</div>
+        <div>
+          <h2>Bring Pilly to your stream.</h2>
+          <p>
+            In OBS, add a <strong>Browser Source</strong>. Minecraft + cam adds
+            Pilly’s camera, HUD, and voice. In native mode, share the Minecraft
+            window from this studio and keep this tab open. Paste the overlay
+            link and set it to <strong>1920 × 1080</strong>.
+          </p>
+        </div>
+        <a href="/overlay" target="_blank" rel="noopener" class="text-button"
+          >View stream scene <span aria-hidden="true">↗</span></a
+        >
+      </section>
+      <footer>
+        <span>PILLY STUDIO</span><span>SMALL PIXELS. BIG PERSONALITY.</span
+        ><span>LOCAL PREVIEW · V1</span>
+      </footer>
+    </main>
+    <div id="toast" role="status" hidden></div>
+  </body>
+</html>

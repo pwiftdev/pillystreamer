@@ -1,0 +1,577 @@
+{
+  "character": "Pilly",
+  "grid": {
+    "width": 48,
+    "height": 60,
+    "viewBox": "-4 -12 56 74",
+    "headViewBox": "3 0 42 33"
+  },
+  "palette": {
+    "o": "#1F3A35",
+    "w": "#FFFFFF",
+    "s": "#C0D5D3",
+    "g": "#5FCB88",
+    "h": "#5FB38A",
+    "p": "#F08A8A"
+  },
+  "headphones": {
+    "Green": "#5FCB88",
+    "Pine": "#2F5A52",
+    "Rose": "#F08A8A"
+  },
+  "expressions": [
+    {
+      "name": "default",
+      "label": "Default",
+      "note": "base",
+      "options": {}
+    },
+    {
+      "name": "happy",
+      "label": "Happy",
+      "note": "",
+      "options": {
+        "eyes": [
+          "happy",
+          "happy"
+        ]
+      }
+    },
+    {
+      "name": "laughing",
+      "label": "Laughing",
+      "note": "",
+      "options": {
+        "eyes": [
+          "squeeze",
+          "squeeze"
+        ],
+        "mouth": "laugh",
+        "fx": [
+          "tears"
+        ]
+      }
+    },
+    {
+      "name": "wink",
+      "label": "Wink",
+      "note": "",
+      "options": {
+        "eyes": [
+          "open",
+          "happy"
+        ],
+        "mouth": "wink"
+      }
+    },
+    {
+      "name": "in-love",
+      "label": "In love",
+      "note": "",
+      "options": {
+        "eyes": [
+          "heart",
+          "heart"
+        ],
+        "mouth": "smile",
+        "fx": [
+          "hearts"
+        ]
+      }
+    },
+    {
+      "name": "smug",
+      "label": "Smug",
+      "note": "",
+      "options": {
+        "eyes": [
+          "smug",
+          "smug"
+        ],
+        "mouth": "smug",
+        "brows": [
+          "flat",
+          "arch"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "shocked",
+      "label": "Shocked",
+      "note": "",
+      "options": {
+        "eyes": [
+          "wide",
+          "wide"
+        ],
+        "mouth": "shocked",
+        "brows": [
+          "up",
+          "up"
+        ],
+        "fx": [
+          "shock"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "panicked",
+      "label": "Panicked",
+      "note": "",
+      "options": {
+        "eyes": [
+          "wide",
+          "wide"
+        ],
+        "mouth": "panic",
+        "brows": [
+          "worry",
+          "worry"
+        ],
+        "fx": [
+          "sweat"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "sad",
+      "label": "Sad",
+      "note": "",
+      "options": {
+        "eyes": [
+          "sad",
+          "sad"
+        ],
+        "mouth": "sad",
+        "brows": [
+          "worry",
+          "worry"
+        ],
+        "fx": [
+          "tear"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "angry",
+      "label": "Angry",
+      "note": "",
+      "options": {
+        "eyes": [
+          "angry",
+          "angry"
+        ],
+        "mouth": "angry",
+        "brows": [
+          "angry",
+          "angry"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "sleepy",
+      "label": "Sleepy",
+      "note": "",
+      "options": {
+        "eyes": [
+          "sleepy",
+          "sleepy"
+        ],
+        "mouth": "sleepy",
+        "fx": [
+          "zzz"
+        ]
+      }
+    },
+    {
+      "name": "dizzy",
+      "label": "Dizzy",
+      "note": "",
+      "options": {
+        "eyes": [
+          "x",
+          "x"
+        ],
+        "mouth": "dizzy",
+        "fx": [
+          "stars"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "begging",
+      "label": "Begging",
+      "note": "",
+      "options": {
+        "eyes": [
+          "beg",
+          "beg"
+        ],
+        "mouth": "beg",
+        "brows": [
+          "worry",
+          "worry"
+        ]
+      }
+    },
+    {
+      "name": "excited",
+      "label": "Excited",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "plus",
+          "plus"
+        ],
+        "mouth": "laugh",
+        "fx": [
+          "sparkle1"
+        ]
+      }
+    },
+    {
+      "name": "cool",
+      "label": "Cool",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "none",
+          "none"
+        ],
+        "glasses": true,
+        "mouth": "smug",
+        "blush": false
+      }
+    },
+    {
+      "name": "thinking",
+      "label": "Thinking",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "up",
+          "up"
+        ],
+        "mouth": "hmm",
+        "brows": [
+          "flat",
+          "up"
+        ],
+        "fx": [
+          "dots"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "confused",
+      "label": "Confused",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "dot",
+          "dot"
+        ],
+        "mouth": "wobbly",
+        "brows": [
+          "flat",
+          "up"
+        ],
+        "fx": [
+          "question"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "crying",
+      "label": "Crying",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "blink",
+          "blink"
+        ],
+        "mouth": "wide",
+        "brows": [
+          "worry",
+          "worry"
+        ],
+        "fx": [
+          "streams"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "blep",
+      "label": "Blep",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "happy",
+          "happy"
+        ],
+        "mouth": "blep"
+      }
+    },
+    {
+      "name": "nervous",
+      "label": "Nervous",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "open",
+          "open"
+        ],
+        "mouth": "wobbly",
+        "brows": [
+          "worry",
+          "worry"
+        ],
+        "fx": [
+          "sweat"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "embarrassed",
+      "label": "Embarrassed",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "happy",
+          "happy"
+        ],
+        "mouth": "wobbly",
+        "fx": [
+          "blushlines"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "unimpressed",
+      "label": "Unimpressed",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "flat",
+          "flat"
+        ],
+        "mouth": "flat",
+        "blush": false
+      }
+    },
+    {
+      "name": "suspicious",
+      "label": "Suspicious",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "side",
+          "side"
+        ],
+        "mouth": "hmm",
+        "brows": [
+          "angry",
+          "flat"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "kiss",
+      "label": "Kiss",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "happy",
+          "happy"
+        ],
+        "mouth": "kiss",
+        "fx": [
+          "hearts"
+        ]
+      }
+    },
+    {
+      "name": "determined",
+      "label": "Determined",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "open",
+          "open"
+        ],
+        "mouth": "smile",
+        "brows": [
+          "angry",
+          "angry"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "rage",
+      "label": "Rage",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "angry",
+          "angry"
+        ],
+        "mouth": "yell",
+        "brows": [
+          "angry",
+          "angry"
+        ],
+        "fx": [
+          "steam"
+        ],
+        "blush": false
+      }
+    },
+    {
+      "name": "uwu",
+      "label": "UwU",
+      "note": "new",
+      "options": {
+        "eyes": [
+          "happy",
+          "happy"
+        ],
+        "mouth": "uwu"
+      }
+    },
+    {
+      "name": "talk-a",
+      "label": "Talk",
+      "note": "A · closed",
+      "options": {
+        "mouth": "closed"
+      }
+    },
+    {
+      "name": "talk-b",
+      "label": "Talk",
+      "note": "B · open",
+      "options": {
+        "mouth": "open"
+      }
+    },
+    {
+      "name": "talk-c",
+      "label": "Talk",
+      "note": "C · wide",
+      "options": {
+        "mouth": "wide"
+      }
+    }
+  ],
+  "reactions": [
+    {
+      "id": "hype",
+      "label": "Hype jump",
+      "cue": "new follower",
+      "frames": 8,
+      "frameMs": 125,
+      "loops": true
+    },
+    {
+      "id": "lol",
+      "label": "LOL",
+      "cue": "chat laughs",
+      "frames": 6,
+      "frameMs": 125,
+      "loops": true
+    },
+    {
+      "id": "scare",
+      "label": "Jump scare",
+      "cue": "big donation",
+      "frames": 10,
+      "frameMs": 125,
+      "loops": true
+    },
+    {
+      "id": "rage",
+      "label": "Rage quit",
+      "cue": "lost the round",
+      "frames": 6,
+      "frameMs": 125,
+      "loops": true
+    },
+    {
+      "id": "cry",
+      "label": "Big cry",
+      "cue": "sad moment",
+      "frames": 6,
+      "frameMs": 125,
+      "loops": true
+    },
+    {
+      "id": "love",
+      "label": "Love",
+      "cue": "gift / raid",
+      "frames": 8,
+      "frameMs": 125,
+      "loops": true
+    },
+    {
+      "id": "vibe",
+      "label": "Vibing",
+      "cue": "music on",
+      "frames": 4,
+      "frameMs": 250,
+      "loops": true
+    },
+    {
+      "id": "think",
+      "label": "Thinking",
+      "cue": "reading chat",
+      "frames": 8,
+      "frameMs": 250,
+      "loops": true
+    },
+    {
+      "id": "sleep",
+      "label": "AFK nap",
+      "cue": "idle 5 min",
+      "frames": 6,
+      "frameMs": 375,
+      "loops": true
+    },
+    {
+      "id": "dizzy",
+      "label": "Dizzy",
+      "cue": "combo / spin",
+      "frames": 6,
+      "frameMs": 125,
+      "loops": true
+    },
+    {
+      "id": "hello",
+      "label": "Hello wave",
+      "cue": "stream start",
+      "frames": 4,
+      "frameMs": 250,
+      "loops": true
+    },
+    {
+      "id": "nervous",
+      "label": "Nervous",
+      "cue": "boss fight",
+      "frames": 6,
+      "frameMs": 125,
+      "loops": true
+    }
+  ]
+}

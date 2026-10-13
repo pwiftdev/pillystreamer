@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pilly · Welcome to Pumpville</title>
+    <link rel="icon" href="/pilly.png" />
+    <link rel="stylesheet" href="/studio.css" />
+    <script type="module" src="/chat.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="wordmark" href="/chat"><span class="logo">P</span>pilly</a
+      ><button id="preview-sound" class="button primary" aria-pressed="false">
+        Hear Pilly
+      </button>
+    </header>
+    <main>
+      <div class="intro">
+        <div>
+          <span class="eyebrow">LOST MY BAGS. FOUND SOME BLOCKS.</span>
+          <h1>Welcome to Pumpville<span>.</span></h1>
+          <p>
+            A cheerful, slightly degen Minecraft beginner with a town-sized
+            dream. Come for the blocks. Stay for the questionable building
+            decisions.
+          </p>
+        </div>
+      </div>
+      <div class="workspace">
+        <section class="preview-panel">
+          <div class="panel-heading">
+            <h2>Pilly’s live room</h2>
+            <span class="meta">LEARNING AS WE GO</span>
+          </div>
+          <div class="preview">
+            <iframe
+              id="overlay-preview"
+              src="/overlay?muted=1"
+              title="Pilly’s live stream scene"
+              allow="autoplay"
+            ></iframe>
+          </div>
+          <div class="panel-body">
+            <p>
+              Pilly is an automated character. His token, $PILLY, is not live
+              yet. The plan: put 100% of creator fees toward keeping him and the
+              stream running.
+            </p>
+          </div>
+        </section>
+        <section class="panel chat-panel" aria-labelledby="chat-title">
+          <div class="panel-heading">
+            <h2 id="chat-title">Talk to Pilly</h2>
+          </div>
+          <div class="panel-body">
+            <ol
+              id="chat-history"
+              class="chat-history"
+              aria-live="polite"
+              aria-relevant="additions"
+            ></ol>
+            <form id="chat-form">
+              <label for="chat-input">Your question</label>
+              <div class="input-row">
+                <input
+                  id="chat-input"
+                  maxlength="300"
+                  required
+                  autocomplete="off"
+                  placeholder="What are we building today?"
+                /><button class="button primary" type="submit">Send</button>
+              </div>
+            </form>
+            <p id="chat-status" role="status">Connecting to Pilly…</p>
+            <p class="setting-note">
+              Chat is shared with everyone watching. Questions are sent to
+              ElevenLabs for Pilly’s reply.
+            </p>
+          </div>
+        </section>
+      </div>
+      <footer>
+        <span>PILLY · FUTURE MAYOR OF PUMPVILLE</span
+        ><span>DIAMOND HANDS. WOODEN TOOLS.</span>
+      </footer>
+    </main>
+  </body>
+</html>

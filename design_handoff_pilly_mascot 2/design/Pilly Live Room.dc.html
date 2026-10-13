@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0F1F1C;-webkit-font-smoothing:antialiased}
+a{color:#5FCB88}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#0F1F1C;color:#FFFFFF;font-family:'Pixelify Sans',system-ui,sans-serif;padding:24px clamp(12px,3vw,40px) 64px;box-sizing:border-box">
+<div style="max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:18px">
+
+<header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <span style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#C0D5D3">FACECAM SCENE · SEATED RIG · 1920×1080</span>
+    <h1 style="margin:0;font-size:clamp(36px,5vw,64px);line-height:.9;font-weight:700">Pilly · live room</h1>
+  </div>
+  <a href="Pilly Pixel Sheet.dc.html" style="font:500 12px 'JetBrains Mono',monospace">← character sheet</a>
+</header>
+
+<div style="position:relative;aspect-ratio:16/9;border:4px solid #1F3A35;border-radius:8px;overflow:hidden;background:#2A4A44;box-shadow:0 0 0 1px #2F5A52">
+  {{ stage }}
+  <sc-if value="{{ overlay }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;left:2.2%;top:3.5%;display:flex;gap:8px;align-items:center;font:700 clamp(10px,1.3vw,17px) 'JetBrains Mono',monospace;pointer-events:none">
+      <span style="background:#F08A8A;color:#1F3A35;border-radius:4px;padding:.25em .6em;white-space:nowrap">● LIVE</span>
+      <span style="background:#1F3A35;color:#FFFFFF;border-radius:4px;padding:.25em .6em;white-space:nowrap">1,204 watching</span>
+    </div>
+    <div style="position:absolute;left:2.2%;bottom:5%;display:flex;flex-direction:column;gap:2px;background:#1F3A35;border:3px solid #5FCB88;border-radius:6px;padding:.4em .8em;pointer-events:none">
+      <span style="font-size:clamp(14px,2vw,28px);font-weight:700;line-height:1">Pilly</span>
+      <span style="font:500 clamp(9px,1vw,13px) 'JetBrains Mono',monospace;color:#C0D5D3">24/7 · just vibing with chat</span>
+    </div>
+  </sc-if>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px">
+  <div style="background:#183029;border:3px solid #2F5A52;border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:10px">
+    <span style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#C0D5D3">VOICE / LIP-SYNC</span>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <sc-for list="{{ talkBtns }}" as="b" hint-placeholder-count="3">
+        <button onClick="{{ b.onClick }}" style="font:700 15px 'Pixelify Sans',sans-serif;padding:8px 14px;border:3px solid #1F3A35;border-radius:4px;background:{{ b.bg }};color:{{ b.fg }};cursor:pointer">{{ b.label }}</button>
+      </sc-for>
+    </div>
+    <span style="font:500 12px 'JetBrains Mono',monospace;color:#C0D5D3;text-wrap:pretty">{{ micMsg }}</span>
+  </div>
+  <div style="background:#183029;border:3px solid #2F5A52;border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:10px">
+    <span style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#C0D5D3">MOOD (HOLDS)</span>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <sc-for list="{{ exprBtns }}" as="b" hint-placeholder-count="11">
+        <button onClick="{{ b.onClick }}" style="font:700 15px 'Pixelify Sans',sans-serif;padding:7px 12px;border:3px solid #1F3A35;border-radius:4px;background:{{ b.bg }};color:{{ b.fg }};cursor:pointer">{{ b.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+  <div style="background:#183029;border:3px solid #2F5A52;border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:10px">
+    <span style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#C0D5D3">REACTIONS (ONE-SHOT)</span>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <sc-for list="{{ rxBtns }}" as="b" hint-placeholder-count="7">
+        <button onClick="{{ b.onClick }}" style="font:700 15px 'Pixelify Sans',sans-serif;padding:7px 12px;border:3px solid #1F3A35;border-radius:4px;background:{{ b.bg }};color:{{ b.fg }};cursor:pointer">{{ b.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+<div style="font:500 12px 'JetBrains Mono',monospace;color:#C0D5D3;line-height:1.5;max-width:860px;text-wrap:pretty">Always on: breathing, idle sway, blinking, looking around, typing bursts, and spring-driven hands that overshoot a little. While he talks he nods and gestures with his right hand. Moods hold until changed; reactions play once and blend back.</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;headphones&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Green&quot;,&quot;Pine&quot;,&quot;Rose&quot;],&quot;default&quot;:&quot;Green&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;overlay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Smooth&quot;,&quot;Stepped&quot;],&quot;default&quot;:&quot;Smooth&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const PAL = { o:'#1F3A35', w:'#FFFFFF', s:'#C0D5D3', g:'#5FCB88', h:'#5FB38A', p:'#F08A8A' };
+const HPC = { Green:'#5FCB88', Pine:'#2F5A52', Rose:'#F08A8A' };
+const GW = 48, GH = 60;
+
+const K = (x, y) => (y + 200) * 1000 + x + 200, KX = k => k % 1000 - 200, KY = k => Math.floor(k / 1000) - 200;
+class Layer {
+  constructor(name) { this.name = name; this.c = new Map(); }
+  set(x, y, v) { this.c.set(K(Math.round(x), Math.round(y)), v); return this; }
+  has(x, y) { return this.c.has(K(x, y)); }
+  stamp(rows, x0, y0) { rows.forEach((r, j) => { for (let i = 0; i < r.length; i++) if (r[i] !== '.') this.set(x0 + i, y0 + j, r[i]); }); return this; }
+  pts(list, v) { list.forEach(([x, y]) => this.set(x, y, v)); return this; }
+  outline() { const add = []; this.c.forEach((v, k) => { const x = KX(k), y = KY(k); [[1,0],[-1,0],[0,1],[0,-1]].forEach(([a, b]) => { if (!this.has(x + a, y + b)) add.push([x + a, y + b]); }); }); add.forEach(([x, y]) => this.set(x, y, 'o')); return this; }
+  brush(list, v = 'o') { list.forEach(([x, y]) => { for (const [a, b] of [[0,0],[1,0],[0,1],[1,1]]) this.set(Math.floor(x) + a, Math.floor(y) + b, v); }); return this; }
+}
+const mir = rows => rows.map(r => [...r].reverse().join(''));
+const quad = (p0, p1, p2, n = 48) => { const out = []; for (let i = 0; i <= n; i++) { const t = i / n, u = 1 - t; out.push([u*u*p0[0] + 2*u*t*p1[0] + t*t*p2[0], u*u*p0[1] + 2*u*t*p1[1] + t*t*p2[1]]); } return out; };
+
+const EYES = {
+  open:   { r:['.oo.','owoo','oooo','oooo','.oo.'] },
+  blink:  { r:['....','....','o..o','.oo.','....'] },
+  happy:  { r:['....','.oo.','o..o','....','....'] },
+  squeeze:{ r:['o...','.oo.','...o','.oo.','o...'], m:1 },
+  sleepy: { r:['....','....','....','oooo','.oo.'] },
+  smug:   { r:['....','....','oooo','owoo','.oo.'] },
+  wide:   { r:['.ooo.','owwwo','owowo','owwwo','.ooo.'] },
+  heart:  { r:['.o.o.','opopo','opppo','.opo.','..o..'] },
+  x:      { r:['o...o','.o.o.','..o..','.o.o.','o...o'] },
+  angry:  { r:['o...','ooo.','owoo','oooo','.oo.'], m:1 },
+  sad:    { r:['...o','.ooo','owoo','oooo','.oo.'], m:1 },
+  beg:    { r:['.ooo.','owwoo','owwoo','ooooo','ooowo','.ooo.'] },
+  plus:   { r:['..o..','..o..','ooooo','..o..','..o..'] },
+  up:     { r:['.ooo.','owwoo','owwwo','owwwo','.ooo.'] },
+  side:   { r:['ooooo','owwoo','owwoo','.ooo.'] },
+  flat:   { r:['....','....','oooo','....','....'] },
+  dot:    { r:['oo','oo'] },
+  none:   { r:[''] },
+};
+const MOUTHS = {
+  grin:   ['oooooooo','oooooooo','.oppppo.','..oooo..'],
+  smile:  ['o......o','.o....o.','..oooo..'],
+  closed: ['o....o','.oooo.'],
+  open:   ['.oooo.','oooooo','oppppo','.oooo.'],
+  wide:   ['.oooooo.','oooooooo','oooooooo','oppppppo','oppppppo','.oooooo.'],
+  laugh:  ['oooooooooo','owwwwwwwwo','oooooooooo','.oppppppo.','..oooooo..'],
+  shocked:['.oo.','oooo','oooo','oppo','.oo.'],
+  panic:  ['oooooooo','owwowwwo','owwwowwo','oooooooo'],
+  smug:   ['.......o','o....oo.','.oooo...'],
+  sad:    ['..oooo..','.o....o.','o......o'],
+  angry:  ['oooooo','owowwo','oooooo'],
+  sleepy: ['.oo.','oooo','.oo.'],
+  beg:    ['o.oo.o','.oppo.','.oppo.','..oo..'],
+  wink:   ['o......o','.o....o.','..oooo..','...opo..','....o...'],
+  dizzy:  ['o.oo.oo.','.o..o..o'],
+  blep:   ['.oooooo.','...opo..','...ooo..'],
+  hmm:    ['oooo'],
+  wobbly: ['o......o','.o.oo.o.','..o..o..'],
+  flat:   ['oooooo'],
+  kiss:   ['.oo.','...o','.oo.','...o','.oo.'],
+  yell:   ['oooooooooo','owwwwwwwwo','oooooooooo','oooooooooo','.oppppppo.','..oooooo..'],
+  uwu:    ['o.oo.o','.o..o.'],
+};
+const MPOS = { hmm:[26,23], flat:[null,23], kiss:[25,21] };
+const BROWS = { flat:['....','oooo'], up:['oooo','....'], arch:['.oo.','o..o'], worry:['..oo','oo..'], angry:['oo..','..oo'] };
+const SHADES = ['oooooooooooooooooooooo','..owooooo....owooooo..','..oowoooo....oowoooo..','...ooooo......ooooo...'];
+const CUP = ['.oo.','oaao','owao','oaao','oaoo','oaoo','oaao','oaao','oaao','.oo.'];
+const SHOE = ['..ooo.','.oggho','oggggo','owwwwo','oooooo'];
+const HAND_WAVE = ['.o.o.','owowo','owwwo','owwso','.ooo.'];
+const HAND_MITT = ['..ooo.','.owwwo','oowwso','owwsso','.oooo.'];
+const HEART = ['p.p','ppp','.p.'], STAR = ['.g.','ggg','.g.'], SPARK = ['.w.','www','.w.'];
+const NOTE = ['..oo','..o.','..o.','ooo.','oo..'], Z4 = ['oooo','..o.','.o..','oooo'], Z3 = ['ooo','.o.','ooo'];
+const ARMS = {
+  wave0: { L:[[6,33],[6,20],'wave'], R:[[42,30],[41,38],'mitt'] },
+  wave1: { L:[[6,33],[4,23],'wave'], R:[[42,30],[41,38],'mitt'] },
+  rest:  { L:[[8,34],[8,40],'mitt'], R:[[40,34],[40,40],'mitt'] },
+  cheer: { L:[[4,30],[5,14],'wave'], R:[[44,30],[43,14],'wave'] },
+  think: { L:[[8,34],[8,40],'mitt'], R:[[42,36],[31,27],'mitt'] },
+  cheeks:{ L:[[6,32],[11,27],'mitt'], R:[[42,32],[37,27],'mitt'] },
+  danceA:{ L:[[4,30],[6,15],'wave'], R:[[40,34],[40,40],'mitt'] },
+  danceB:{ L:[[8,34],[8,40],'mitt'], R:[[44,30],[42,15],'wave'] },
+};
+
+const inside = (x, y) => { const px = x + .5 - 24, py = y + .5; if (py < 17) return px*px + (py-17)**2 <= 121; if (py > 39) return px*px + (py-39)**2 <= 121; return Math.abs(px) <= 11; };
+const BODY = (() => { const L = new Layer('body');
+  for (let y = 0; y < GH; y++) for (let x = 0; x < GW; x++) if (inside(x, y)) { const top = y <= 28; let v = y === 29 ? 'o' : top ? 'w' : 'g'; if (y !== 29 && !inside(x + 3, y + 2)) v = top ? 's' : 'h'; L.set(x, y, v); }
+  L.pts([[16,32],[15,33],[15,35],[15,36],[15,37],[16,39],[17,40]], 'w'); return L.outline(); })();
+const BAND = (() => { const L = new Layer('headphones-band'); for (let y = 0; y < 18; y++) for (let x = 0; x < GW; x++) { const r = Math.hypot(x + .5 - 24, y + .5 - 17); if (r >= 12.6 && r <= 14.4) L.set(x, y, 'a'); } return L.outline(); })();
+const CUPS = new Layer('headphones-cups').stamp(CUP, 9, 13).stamp(mir(CUP), 35, 13);
+const MIC = new Layer('headphones-mic').pts([[10,23],[11,24],[12,25],[13,25],[14,25]], 'o').stamp(['.oo.','oaao','.oo.'], 15, 24);
+const LEGS = new Layer('legs').brush(quad([18, 47], [18, 52], [18, 55])).brush(quad([29, 47], [29, 52], [29, 55]));
+const SHOES = new Layer('shoes').stamp(SHOE, 14, 54).stamp(mir(SHOE), 28, 54);
+
+const placeEye = (L, name, side) => { if (name === 'none') return; const E = EYES[name], rows = side && E.m ? mir(E.r) : E.r, w = rows[0].length, h = rows.length;
+  L.stamp(rows, side ? 30 - Math.floor(w / 2) : 18 - Math.ceil(w / 2), 19 - h); };
+const placeMouth = (L, name) => { const m = MOUTHS[name], p = MPOS[name] || []; L.stamp(m, p[0] ?? 24 - Math.round(m[0].length / 2), p[1] ?? 21); };
+
+function character(o) {
+  const e = Object.assign({ eyes:['open','open'], mouth:'grin', brows:null, fx:[], blush:true, t:0 }, o);
+  const t = e.t, has = n => e.fx.includes(n), up = [], low = [];
+  let A = null;
+  if (e.limbs) {
+    low.push(LEGS, SHOES);
+    A = ARMS[e.arms || 'wave0'];
+    up.push(new Layer('arms').brush(quad([14, 31], A.L[0], A.L[1])).brush(quad([32, 31], A.R[0], A.R[1])));
+  }
+  up.push(BODY);
+  const blush = new Layer('blush'); if (e.blush) blush.pts([[14,20],[15,20],[32,20],[33,20]], 'p');
+  const eyes = new Layer('eyes'); const en = e.blink && e.eyes[0] !== 'none' ? ['blink','blink'] : e.eyes; placeEye(eyes, en[0], 0); placeEye(eyes, en[1], 1);
+  const brows = new Layer('brows'); if (e.brows) { brows.stamp(BROWS[e.brows[0]], 16, 11); brows.stamp(mir(BROWS[e.brows[1]]), 28, 11); }
+  up.push(blush, eyes, brows);
+  if (e.glasses) up.push(new Layer('glasses').stamp(SHADES, 13, 14));
+  if (e.rig) ['grin','closed','open','wide'].forEach((m, i) => { const L = new Layer('mouth-' + m); placeMouth(L, m); L.hidden = i > 0; up.push(L); });
+  else { const mouth = new Layer('mouth'); placeMouth(mouth, e.mouth); up.push(mouth); }
+  const F = new Layer('fx-shapes'), I = new Layer('fx-lines');
+  if (has('tears')) F.pts([[14,19],[14,20],[33,19],[33,20]], 's');
+  if (has('tear')) F.pts([[15,19],[15,20],[15,21]], 's');
+  if (has('streams')) for (let y = 19; y <= 27; y++) if ((y + t) % 3) F.set(15, y, 's').set(32, y, 's');
+  if (has('sweat')) F.pts([[40,4],[39,5],[40,5],[41,5],[39,6],[40,6],[41,6]], 's');
+  if (has('sweat-drip')) { const d = t % 6; F.pts([[40,3+d],[39,4+d],[40,4+d],[41,4+d]], 's'); }
+  if (has('hearts')) F.stamp(HEART, 40, 3).stamp(HEART, 5, 6);
+  if (has('hearts-float')) { F.stamp(HEART, 40, 6 - Math.floor((t % 8) * 1.5)); F.stamp(HEART, 4, 6 - Math.floor(((t + 4) % 8) * 1.5)); }
+  if (has('stars')) F.stamp(STAR, 5, 4).stamp(STAR, 40, 2);
+  if (has('orbit')) { const P = [[4,6],[12,0],[24,-3],[36,0],[43,6],[24,9]]; F.stamp(STAR, ...P[t % 6]).stamp(STAR, ...P[(t + 3) % 6]); }
+  if (has('sparkles')) (t % 2 ? [[2,2],[42,10],[44,-2]] : [[42,1],[1,12],[6,-3]]).forEach(p => F.stamp(SPARK, p[0], p[1]));
+  if (has('sparkle1')) F.stamp(SPARK, 41, 2).stamp(SPARK, 3, 8);
+  if (has('steam')) [0, 3].forEach((k, j) => { const y = 4 - ((t + k) % 6); F.stamp(['ss','ss'], j ? 40 : 6, y); });
+  if (has('zzz')) I.stamp(Z4, 39, 5).stamp(Z3, 44, 0);
+  if (has('zzz-float')) { I.stamp(Z4, 39, 5 - (t % 6)); I.stamp(Z3, 44, 1 - ((t + 3) % 6)); }
+  if (has('shock')) I.pts([[5,3],[6,4],[42,3],[41,4],[3,9],[4,9],[43,9],[44,9]], 'o');
+  if (has('exclaim')) I.stamp(['oo','oo','oo','..','oo'], 41, -2).stamp(['oo','oo','oo','..','oo'], 4, 0);
+  if (has('question')) I.stamp(['ooo','..o','.oo','...','.o.'], 40, 1);
+  if (has('dots')) [[37,6],[40,6],[43,6]].slice(0, e.dots ?? 3).forEach(([x, y]) => I.brush([[x, y]]));
+  if (has('notes')) { I.stamp(NOTE, 40, 4 - (t % 4)); I.stamp(NOTE, 3, 6 - ((t + 2) % 4)); }
+  if (has('blushlines')) I.pts([[13,21],[14,20],[15,21],[16,20],[31,21],[32,20],[33,21],[34,20]], 'p');
+  if (has('wave')) I.pts(e.wave ? [[0,21],[0,22],[0,23],[1,18],[2,17]] : [[1,18],[1,19],[1,20],[3,15],[4,14]], 'o');
+  F.outline();
+  up.push(F, BAND, CUPS, MIC);
+  if (A) { const H = new Layer('hands'); [[A.L, 0], [A.R, 1]].forEach(([s, r]) => { const [hx, hy] = s[1];
+      if (s[2] === 'wave') H.stamp(HAND_WAVE, hx - 2, hy - 2); else H.stamp(r ? HAND_MITT : mir(HAND_MITT), hx - 3, hy - 2); }); up.push(H); }
+  up.push(I);
+  const items = [...low.map(L => ({ L, dx:0, dy:0 })), ...up.map(L => ({ L, dx: e.dx || 0, dy: e.dy || 0 }))];
+  const j = e.jump || 0, sq = e.sq || 0;
+  items.tf = (j || sq) ? 'translate(0 ' + j + ') translate(24 59) scale(' + (1 + sq) + ' ' + (1 - sq) + ') translate(-24 -59)' : '';
+  return items;
+}
+
+function compose(items, HC, opt = {}) {
+  let out = '';
+  if (opt.sticker) {
+    const S = new Set(); items.forEach(({ L, dx, dy }) => { if (L.hidden) return; const off = dy * 1000 + dx; L.c.forEach((v, k) => S.add(k + off)); });
+    let ring = new Set(S);
+    for (let pass = 0; pass < 2; pass++) { const next = new Set(ring); ring.forEach(p => { next.add(p + 1); next.add(p - 1); next.add(p + 1000); next.add(p - 1000); }); ring = next; }
+    let r = ''; ring.forEach(p => { if (!S.has(p)) r += '<rect x="' + KX(p) + '" y="' + KY(p) + '" width="1.04" height="1.04" fill="#FFFFFF"/>'; });
+    out += '<g data-part="sticker-border"' + (opt.rig ? ' id="sticker-border"' : '') + '>' + r + '</g>';
+  }
+  items.forEach(({ L, dx, dy }) => {
+    const rows = new Map();
+    L.c.forEach((v, k) => { const x = KX(k), y = KY(k); if (!rows.has(y)) rows.set(y, []); rows.get(y).push([x, v]); });
+    let s = '';
+    rows.forEach((arr, y) => { arr.sort((a, b) => a[0] - b[0]); let i = 0;
+      while (i < arr.length) { let j = i + 1; while (j < arr.length && arr[j][0] === arr[j - 1][0] + 1 && arr[j][1] === arr[i][1]) j++;
+        const v = arr[i][1]; s += '<rect x="' + arr[i][0] + '" y="' + y + '" width="' + (arr[j - 1][0] - arr[i][0] + 1.04) + '" height="1.04" fill="' + (v === 'a' ? HC : PAL[v]) + '"/>'; i = j; } });
+    out += '<g' + (opt.rig ? ' id="' + L.name + '"' : '') + ' data-part="' + L.name + '"' + ((dx || dy) ? ' transform="translate(' + dx + ' ' + dy + ')"' : '') + (L.hidden ? ' display="none"' : '') + '>' + s + '</g>';
+  });
+  return items.tf ? '<g transform="' + items.tf + '">' + out + '</g>' : out;
+}
+const svg = (vb, inner, w, h) => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + vb + '"' + (w ? ' width="' + w + '" height="' + h + '"' : '') + ' shape-rendering="crispEdges" style="width:100%;height:auto;display:block">' + inner + '</svg>';
+const el = html => React.createElement('div', { style:{ width:'100%' }, dangerouslySetInnerHTML:{ __html: html } });
+
+const EX = [
+  ['Default', 'base', {}],
+  ['Happy', '', { eyes:['happy','happy'] }],
+  ['Laughing', '', { eyes:['squeeze','squeeze'], mouth:'laugh', fx:['tears'] }],
+  ['Wink', '', { eyes:['open','happy'], mouth:'wink' }],
+  ['In love', '', { eyes:['heart','heart'], mouth:'smile', fx:['hearts'] }],
+  ['Smug', '', { eyes:['smug','smug'], mouth:'smug', brows:['flat','arch'], blush:false }],
+  ['Shocked', '', { eyes:['wide','wide'], mouth:'shocked', brows:['up','up'], fx:['shock'], blush:false }],
+  ['Panicked', '', { eyes:['wide','wide'], mouth:'panic', brows:['worry','worry'], fx:['sweat'], blush:false }],
+  ['Sad', '', { eyes:['sad','sad'], mouth:'sad', brows:['worry','worry'], fx:['tear'], blush:false }],
+  ['Angry', '', { eyes:['angry','angry'], mouth:'angry', brows:['angry','angry'], blush:false }],
+  ['Sleepy', '', { eyes:['sleepy','sleepy'], mouth:'sleepy', fx:['zzz'] }],
+  ['Dizzy', '', { eyes:['x','x'], mouth:'dizzy', fx:['stars'], blush:false }],
+  ['Begging', '', { eyes:['beg','beg'], mouth:'beg', brows:['worry','worry'] }],
+  ['Excited', 'new', { eyes:['plus','plus'], mouth:'laugh', fx:['sparkle1'] }],
+  ['Cool', 'new', { eyes:['none','none'], glasses:true, mouth:'smug', blush:false }],
+  ['Thinking', 'new', { eyes:['up','up'], mouth:'hmm', brows:['flat','up'], fx:['dots'], blush:false }],
+  ['Confused', 'new', { eyes:['dot','dot'], mouth:'wobbly', brows:['flat','up'], fx:['question'], blush:false }],
+  ['Crying', 'new', { eyes:['blink','blink'], mouth:'wide', brows:['worry','worry'], fx:['streams'], blush:false }],
+  ['Blep', 'new', { eyes:['happy','happy'], mouth:'blep' }],
+  ['Nervous', 'new', { eyes:['open','open'], mouth:'wobbly', brows:['worry','worry'], fx:['sweat'], blush:false }],
+  ['Embarrassed', 'new', { eyes:['happy','happy'], mouth:'wobbly', fx:['blushlines'], blush:false }],
+  ['Unimpressed', 'new', { eyes:['flat','flat'], mouth:'flat', blush:false }],
+  ['Suspicious', 'new', { eyes:['side','side'], mouth:'hmm', brows:['angry','flat'], blush:false }],
+  ['Kiss', 'new', { eyes:['happy','happy'], mouth:'kiss', fx:['hearts'] }],
+  ['Determined', 'new', { eyes:['open','open'], mouth:'smile', brows:['angry','angry'], blush:false }],
+  ['Rage', 'new', { eyes:['angry','angry'], mouth:'yell', brows:['angry','angry'], fx:['steam'], blush:false }],
+  ['UwU', 'new', { eyes:['happy','happy'], mouth:'uwu' }],
+  ['Talk', 'A · closed', { mouth:'closed' }],
+  ['Talk', 'B · open', { mouth:'open' }],
+  ['Talk', 'C · wide', { mouth:'wide' }],
+];
+const RX = [
+  { id:'hype', label:'Hype jump', cue:'new follower', n:8, s:1, f:i => ({ arms:'cheer', eyes:['plus','plus'], mouth:'laugh', fx:['sparkles'], jump:[0,0,-2,-5,-7,-5,-2,0][i], sq:[.08,0,0,0,0,0,0,.08][i] }) },
+  { id:'lol', label:'LOL', cue:'chat laughs', n:6, s:1, f:i => ({ arms:'rest', eyes:['squeeze','squeeze'], mouth:'laugh', fx:['tears'], dx:i % 2 ? 1 : -1, dy:Math.floor(i / 2) % 2 }) },
+  { id:'scare', label:'Jump scare', cue:'big donation', n:10, s:1, f:i => i < 2 ? { arms:'rest' } : { arms:'cheeks', eyes:['wide','wide'], mouth:'shocked', brows:['up','up'], fx:['shock','exclaim'], blush:false, jump:i === 2 ? -4 : i === 3 ? -2 : 0, dx:i > 4 ? (i % 2 ? 1 : -1) : 0 } },
+  { id:'rage', label:'Rage quit', cue:'lost the round', n:6, s:1, f:i => ({ arms:'cheer', eyes:['angry','angry'], brows:['angry','angry'], mouth:'yell', fx:['steam'], blush:false, dx:i % 2 ? 1 : -1 }) },
+  { id:'cry', label:'Big cry', cue:'sad moment', n:6, s:1, f:i => ({ arms:'rest', eyes:['blink','blink'], brows:['worry','worry'], mouth:'wide', fx:['streams'], blush:false, dy:Math.floor(i / 3) % 2 }) },
+  { id:'love', label:'Love', cue:'gift / raid', n:8, s:1, f:i => ({ arms:'cheeks', eyes:['heart','heart'], mouth:'smile', fx:['hearts-float'], dx:[0,0,1,1,0,0,-1,-1][i] }) },
+  { id:'vibe', label:'Vibing', cue:'music on', n:4, s:2, f:i => ({ arms:i % 2 ? 'danceB' : 'danceA', eyes:['happy','happy'], mouth:'smile', fx:['notes'], dx:i % 2 ? 1 : -1, dy:i % 2 }) },
+  { id:'think', label:'Thinking', cue:'reading chat', n:8, s:2, f:i => ({ arms:'think', eyes:['up','up'], brows:['flat','up'], mouth:'hmm', fx:['dots'], dots:i % 4, blush:false }) },
+  { id:'sleep', label:'AFK nap', cue:'idle 5 min', n:6, s:3, f:i => ({ arms:'rest', eyes:['sleepy','sleepy'], mouth:'sleepy', fx:['zzz-float'], dy:i < 3 ? 0 : 1 }) },
+  { id:'dizzy', label:'Dizzy', cue:'combo / spin', n:6, s:1, f:i => ({ arms:'rest', eyes:['x','x'], mouth:'dizzy', fx:['orbit'], blush:false, dx:[0,1,1,0,-1,-1][i] }) },
+  { id:'hello', label:'Hello wave', cue:'stream start', n:4, s:2, f:i => ({ arms:i % 2 ? 'wave1' : 'wave0', eyes:i === 3 ? ['open','happy'] : ['happy','happy'], mouth:'grin', fx:['wave'], wave:i % 2 === 1, dy:i % 2 }) },
+  { id:'nervous', label:'Nervous', cue:'boss fight', n:6, s:1, f:i => ({ arms:'cheeks', eyes:['side','side'], brows:['worry','worry'], mouth:'wobbly', fx:['sweat-drip'], blush:false, dx:i % 3 === 0 ? 1 : 0 }) },
+];
+const SPEECH = ['closed','open','wide','open','closed','wide','open','open','closed','closed','wide','open','closed','closed'];
+const HEAD_VB = '3 0 42 33', MAIN_VB = '-4 -12 56 74';
+const rxFrame = (r, i) => Object.assign({ limbs:true, t:i }, r.f(i));
+
+
+const C = { wall:'#2A4A44', wall2:'#264540', dark:'#183029', pine:'#1F3A35', desk:'#2F5A52', top:'#3C6B61', topHi:'#4E8075', mint:'#5FCB88', mintS:'#5FB38A', rose:'#F08A8A', white:'#FFFFFF', mist:'#C0D5D3', sky:'#1D3B47' };
+const RC = (x, y, w, h, c, a = '') => '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + c + '"' + a + '/>';
+const PIX = (rows, x0, y0, map) => rows.map((r, j) => [...r].map((ch, i) => ch === '.' ? '' : RC(x0 + i, y0 + j, 1.03, 1.03, map[ch])).join('')).join('');
+const XP = {
+  default:{ label:'Default', eyes:['open','open'], idle:'grin', blush:true },
+  happy:  { label:'Happy', eyes:['happy','happy'], idle:'smile', blush:true },
+  laugh:  { label:'Laughing', eyes:['squeeze','squeeze'], idle:'laugh', fx:['tears'], blush:true },
+  smug:   { label:'Smug', eyes:['smug','smug'], brows:['flat','arch'], idle:'smug' },
+  shocked:{ label:'Shocked', eyes:['wide','wide'], brows:['up','up'], idle:'shocked', fx:['shock'] },
+  sad:    { label:'Sad', eyes:['sad','sad'], brows:['worry','worry'], idle:'sad', fx:['tear'] },
+  love:   { label:'In love', eyes:['heart','heart'], idle:'smile', blush:true },
+  angry:  { label:'Angry', eyes:['angry','angry'], brows:['angry','angry'], idle:'angry' },
+  think:  { label:'Thinking', eyes:['up','up'], brows:['flat','up'], idle:'hmm', fx:['dots'] },
+  sleepy: { label:'Sleepy', eyes:['sleepy','sleepy'], idle:'sleepy', fx:['zzz'], blush:true },
+  cool:   { label:'Cool', eyes:['none','none'], glasses:true, idle:'smug' },
+};
+const MOUTH_SET = ['grin','smile','closed','open','wide','laugh','shocked','smug','sad','angry','hmm','sleepy'];
+const RXN = {
+  wave:  { label:'Wave hi', dur:2.6, expr:'happy' },
+  cheer: { label:'Cheer', dur:2.2, expr:'laugh', lock:true },
+  laugh: { label:'LOL', dur:2.4, expr:'laugh', lock:true },
+  shock: { label:'Jump scare', dur:2.0, expr:'shocked', lock:true },
+  love:  { label:'Love', dur:3.0, expr:'love' },
+  think: { label:'Hmm…', dur:3.2, expr:'think' },
+  rage:  { label:'Rage', dur:2.2, expr:'angry' },
+};
+const HEART_ROWS = ['.rr...rr.','r..r.r..r','r...r...r','r.......r','.r.....r.','..r...r..','...r.r...','....r....'];
+const STARS = [[10,13],[15,17],[11,28],[24,30],[30,26],[14,31],[29,18]];
+
+function buildStage(HC) {
+  const one = L => compose([{ L, dx:0, dy:0 }], HC);
+  let s = RC(0, 0, 128, 72, C.wall);
+  for (let x = 4; x < 128; x += 10) s += RC(x, 2, 1, 58, C.wall2);
+  s += RC(0, 0, 128, 1, C.mint) + '<rect id="pl-led" x="0" y="1" width="128" height="7" fill="' + C.mint + '" opacity=".15"/>';
+  s += RC(5, 8, 30, 28, C.dark) + RC(7, 10, 26, 24, C.sky) + RC(19, 10, 2, 24, C.dark) + RC(7, 21, 26, 2, C.dark) + RC(4, 36, 32, 2, C.dark) + RC(5, 38, 30, 1, C.pine);
+  s += PIX(['.ww.','wwws','wwws','.ss.'], 26, 12, { w:C.white, s:C.mist });
+  s += STARS.map(([x, y], i) => '<rect id="pl-star-' + i + '" x="' + x + '" y="' + y + '" width="1" height="1" fill="' + C.white + '"/>').join('');
+  s += RC(92, 22, 32, 2, C.dark) + RC(92, 38, 32, 2, C.dark) + RC(95, 24, 2, 2, C.dark) + RC(119, 24, 2, 2, C.dark) + RC(95, 40, 2, 2, C.dark) + RC(119, 40, 2, 2, C.dark);
+  s += '<g id="pl-plant">' + PIX(['..g.g..','.gghgg.','ghg.ghg','.g.h.g.','...h...'], 97, 11, { g:C.mint, h:C.mintS }) + '</g>' + RC(98, 16, 6, 6, C.pine) + RC(99, 17, 4, 4, C.rose);
+  s += RC(108, 12, 3, 10, C.mint) + RC(111, 14, 3, 8, C.rose) + RC(114, 11, 3, 11, C.mist) + RC(117, 15, 4, 7, C.white) + RC(108, 12, 3, 1, C.mintS) + RC(114, 11, 3, 1, C.dark);
+  s += PIX(['.ooo.','owwwo','owwwo','ooooo','oggho','oggho','.ooo.'], 99, 31, { o:C.pine, w:C.white, g:C.mint, h:C.mintS });
+  s += RC(108, 30, 9, 8, C.pine) + RC(109, 31, 7, 3, C.rose) + RC(109, 35, 7, 2, C.mist);
+  const glow = new Layer('g').stamp(HEART_ROWS.map(r => r.replace(/r/g, 'p')), 109, 45).outline(); let gl = ''; glow.c.forEach((v, k) => { if (v === 'o') gl += RC(KX(k), KY(k), 1, 1, C.rose); });
+  s += '<g id="pl-neon-glow" opacity=".35">' + gl + '</g><g id="pl-neon">' + PIX(HEART_ROWS, 109, 45, { r:C.rose }) + '</g>';
+  s += RC(46, 11, 36, 1, C.dark) + RC(45, 12, 38, 50, C.dark) + RC(41, 26, 4, 26, C.dark) + RC(83, 26, 4, 26, C.dark) + RC(49, 15, 1, 42, C.desk) + RC(78, 15, 1, 42, C.desk) + RC(56, 13, 16, 3, C.desk);
+  const blush = new Layer('blush').pts([[14,20],[15,20],[32,20],[33,20]], 'p');
+  let eyes = '', extra = '';
+  Object.entries(XP).forEach(([k, x]) => {
+    const items = character({ eyes:x.eyes, brows:x.brows || null, fx:x.fx || [], glasses:!!x.glasses, blush:false });
+    const pick = names => compose(items.filter(({ L }) => names.includes(L.name)), HC);
+    eyes += '<g id="pl-ex-' + k + '" display="none">' + pick(['eyes']) + '</g>';
+    extra += '<g id="pl-xb-' + k + '" display="none">' + pick(['brows', 'glasses', 'fx-shapes', 'fx-lines']) + '</g>';
+  });
+  const mouths = MOUTH_SET.map(m => { const L = new Layer('m'); placeMouth(L, m); return '<g id="pl-m-' + m + '" display="none">' + one(L) + '</g>'; }).join('');
+  s += '<g id="pl-pilly" transform="translate(40 14)">' + compose([BODY, BAND, CUPS, MIC].map(L => ({ L, dx:0, dy:0 })), HC)
+    + '<g id="pl-blush">' + one(blush) + '</g><g id="pl-face"><g id="pl-eyes">' + eyes + '</g>' + extra + mouths + '</g></g>';
+  s += RC(0, 60, 128, 4, C.top) + RC(0, 60, 128, 1, C.topHi) + RC(0, 64, 128, 8, C.desk) + RC(0, 64, 128, 1, C.dark);
+  s += RC(45, 59, 38, 4, C.pine);
+  for (let i = 0; i < 18; i++) s += RC(46 + i * 2, 60, 1, 1, C.mist);
+  for (let i = 0; i < 17; i++) s += RC(47 + i * 2, 61, 1, 1, C.mist);
+  s += '<rect id="pl-kb" x="45" y="63" width="38" height="1" fill="' + C.mint + '"/>';
+  s += RC(88, 61, 14, 2, C.pine) + PIX(['.ww.','wwww','wsww'], 93, 59, { w:C.white, s:C.mist });
+  s += RC(19, 52, 8, 9, C.pine) + RC(20, 53, 6, 7, C.rose) + RC(20, 53, 6, 1, C.dark) + RC(27, 54, 2, 1, C.pine) + RC(28, 54, 1, 5, C.pine) + RC(27, 58, 2, 1, C.pine);
+  s += [0, 1, 2].map(i => '<circle id="pl-steam-' + i + '" cx="23" cy="50" r=".9" fill="' + C.mist + '" opacity="0"/>').join('');
+  const arm = id => '<path id="' + id + '" d="" fill="none" stroke="' + C.pine + '" stroke-width="2.2" stroke-linecap="round" shape-rendering="geometricPrecision"/>';
+  s += arm('pl-arm-l') + arm('pl-arm-r');
+  const mittL = one(new Layer('h').stamp(mir(HAND_MITT), 0, 0)), mittR = one(new Layer('h').stamp(HAND_MITT, 0, 0)), open = one(new Layer('h').stamp(HAND_WAVE, 0, 0));
+  ['l', 'r'].forEach(sd => { s += '<g id="pl-hand-' + sd + '"><g id="pl-h' + sd + '-mitt" transform="translate(-3 -2.5)">' + (sd === 'l' ? mittL : mittR) + '</g><g id="pl-h' + sd + '-open" transform="translate(-2.5 -2.5)" display="none">' + open + '</g></g>'; });
+  const heart = one(new Layer('hh').stamp(HEART, 1, 1).outline());
+  s += [0, 1, 2].map(i => '<g id="pl-heart-' + i + '" opacity="0">' + heart + '</g>').join('');
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 72" width="100%" height="100%" shape-rendering="crispEdges" style="display:block">' + s + '</svg>';
+}
+
+class Component extends DCLogic {
+  state = { expr:'default', talk:'sim', react:null, micMsg:'Simulated speech is driving the mouth. Switch to Microphone to lip-sync to your own voice.' };
+  ctrl = { expr:'default', talk:'sim', react:null, rt:0 };
+  A = { amp:0, gate:0, tb:0, x:null, m:null, nb:0, bs:-9, db:0, ng:0, tg:[0, 0], gx:0, gy:0, mLv:'closed', mPend:'', mT:0,
+        hand:{ l:{ p:[50, 60], v:[0, 0] }, r:{ p:[78, 60], v:[0, 0] } }, open:{ l:null, r:null } };
+  nodes = {};
+  componentDidMount() { this.loop = this.loop.bind(this); this.raf = requestAnimationFrame(this.loop); }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); this.stopMic(); }
+  stopMic() { if (this.mic) { this.mic.s.getTracks().forEach(t => t.stop()); this.mic.ctx.close(); this.mic = null; } }
+  async startMic() {
+    try {
+      const st = await navigator.mediaDevices.getUserMedia({ audio:true });
+      const ctx = new (window.AudioContext || window.webkitAudioContext)(), an = ctx.createAnalyser(); an.fftSize = 1024;
+      ctx.createMediaStreamSource(st).connect(an);
+      this.mic = { s:st, ctx, an, buf:new Float32Array(1024) };
+      this.ctrl.talk = 'mic'; this.setState({ talk:'mic', micMsg:'Mic is live. Talk and Pilly lip-syncs to your voice.' });
+    } catch (e) { this.setState({ micMsg:'Microphone blocked. Allow mic access for this page, or use Simulated.' }); }
+  }
+  setTalk(k) {
+    if (k === 'mic') return this.startMic();
+    this.stopMic(); this.ctrl.talk = k;
+    this.setState({ talk:k, micMsg: k === 'sim' ? 'Simulated speech is driving the mouth.' : 'Silent: idle face, typing.' });
+  }
+  loop(now) {
+    this.raf = requestAnimationFrame(this.loop);
+    const N = this.nodes, q = id => N[id] || (N[id] = document.getElementById(id));
+    if (!q('pl-pilly')) return;
+    const t = now / 1000, dt = Math.min(.05, this.last ? t - this.last : .016); this.last = t;
+    const ex = k => 1 - Math.exp(-dt * k), A = this.A, c = this.ctrl, stepped = (this.props.motion || 'Smooth') === 'Stepped';
+    const sn = v => stepped ? Math.round(v) : +v.toFixed(3);
+    let r = c.react ? RXN[c.react] : null, e = r ? t - c.rt : 0;
+    if (r && e > r.dur) { c.react = null; r = null; this.setState({ react:null }); }
+    const w = r ? Math.max(0, Math.min(1, e / .25, (r.dur - e) / .35)) : 0, rk = r ? c.react : '';
+    let a = 0;
+    if (c.talk === 'sim') { const g = (Math.sin(t * .9) + Math.sin(t * .37 + 1.3) + .5) > 0 ? 1 : 0; A.gate += (g - A.gate) * ex(6);
+      a = A.gate * Math.max(0, Math.sin(t * 10.5 + 2 * Math.sin(t * 2.3))) * (.45 + .55 * Math.abs(Math.sin(t * 1.7))); }
+    else if (c.talk === 'mic' && this.mic) { const m = this.mic; m.an.getFloatTimeDomainData(m.buf); let sum = 0; for (let i = 0; i < m.buf.length; i++) sum += m.buf[i] * m.buf[i];
+      a = Math.min(1, Math.max(0, (Math.sqrt(sum / m.buf.length) - .012) * 10)); A.gate += ((a > .05 ? 1 : 0) - A.gate) * ex(a > .05 ? 20 : 3); }
+    else A.gate += (0 - A.gate) * ex(6);
+    A.amp += (a - A.amp) * ex(a > A.amp ? 30 : 12);
+    const amp = A.amp, speaking = A.gate > .5;
+    const xk = r ? r.expr : c.expr;
+    if (xk !== A.x) { if (A.x) { q('pl-ex-' + A.x).setAttribute('display', 'none'); q('pl-xb-' + A.x).setAttribute('display', 'none'); }
+      q('pl-ex-' + xk).removeAttribute('display'); q('pl-xb-' + xk).removeAttribute('display'); q('pl-blush').setAttribute('display', XP[xk].blush ? 'inline' : 'none'); A.x = xk; }
+    let mk = XP[xk].idle;
+    if (speaking && !(r && r.lock)) { const lv = amp < .08 ? 'closed' : amp < .38 ? 'open' : 'wide'; if (lv !== A.mPend) { A.mPend = lv; A.mT = t; } if (t - A.mT > .045) A.mLv = lv; mk = A.mLv; }
+    if (mk !== A.m) { if (A.m) q('pl-m-' + A.m).setAttribute('display', 'none'); q('pl-m-' + mk).removeAttribute('display'); A.m = mk; }
+    if (t > A.nb) { A.bs = t; A.nb = t + 2.2 + Math.random() * 3.5; if (Math.random() < .22) A.db = t + .3; }
+    if (A.db && t > A.db) { A.bs = t; A.db = 0; }
+    const bp = (t - A.bs) / .16, bl = bp >= 0 && bp < 1 ? Math.sin(Math.PI * bp) : 0;
+    const sy = ['happy','squeeze','sleepy','none','heart'].includes(XP[xk].eyes[0]) ? 1 : 1 - .92 * bl;
+    q('pl-eyes').setAttribute('transform', 'translate(0 ' + (16.5 * (1 - sy)).toFixed(3) + ') scale(1 ' + sy.toFixed(3) + ')');
+    if (t > A.ng) { A.ng = t + 1.2 + Math.random() * 2.8; const k = speaking ? .35 : 1; A.tg = [(Math.random() * 2 - 1) * 1.4 * k, (Math.random() * 2 - 1) * .7 * k]; }
+    A.gx += (A.tg[0] - A.gx) * ex(14); A.gy += (A.tg[1] - A.gy) * ex(14);
+    q('pl-face').setAttribute('transform', 'translate(' + sn(A.gx) + ' ' + sn(A.gy + amp * .4) + ')');
+    let th = 1.1 * Math.sin(t * 1.05) + amp * 1.8 * Math.sin(t * 6.5), by = -amp * .7;
+    const br = 1 + .014 * Math.sin(t * 2.1);
+    if (rk === 'cheer') by -= w * 2.2 * Math.abs(Math.sin(e * 9));
+    if (rk === 'laugh') { th += w * 2.4 * Math.sin(e * 21); by -= w * .6 * Math.abs(Math.sin(e * 10.5)); }
+    if (rk === 'shock') { by -= 4 * Math.max(0, Math.sin(Math.min(e * 5, Math.PI))); th += w * .7 * Math.sin(e * 45); }
+    if (rk === 'rage') th += w * 1.8 * Math.sin(e * 32);
+    if (rk === 'wave') th += w * 2 * Math.sin(e * 3.2);
+    if (rk === 'love') th += w * 2.5 * Math.sin(e * 2.4);
+    if (rk === 'think') th -= w * 3;
+    const sx = 1 / Math.sqrt(br);
+    q('pl-pilly').setAttribute('transform', 'translate(40 ' + sn(14 + by) + ') rotate(' + th.toFixed(3) + ' 24 52) translate(24 52) scale(' + sx.toFixed(4) + ' ' + br.toFixed(4) + ') translate(-24 -52)');
+    const cs = Math.cos(th * Math.PI / 180), si = Math.sin(th * Math.PI / 180);
+    const TP = (px, py) => { const dx = (px - 24) * sx, dy = (py - 52) * br; return [40 + 24 + dx * cs - dy * si, 14 + by + 52 + dx * si + dy * cs]; };
+    A.tb += (((Math.sin(t * .8) + Math.sin(t * .31) > .2) && !speaking && !r ? 1 : 0) - A.tb) * ex(5);
+    const baseL = [50 + 1.2 * Math.sin(t * 1.3), 60 - A.tb * Math.max(0, Math.sin(t * 15)) * 1.1];
+    let baseR = [78 + 1.2 * Math.sin(t * 1.1 + 1), 60 - A.tb * Math.max(0, Math.sin(t * 15 + 2)) * 1.1], openR = false, openL = false;
+    if (speaking && !r) { const g = Math.min(1, A.gate); baseR = [baseR[0] + (80 + 2 * Math.sin(t * 1.7) - baseR[0]) * g, baseR[1] + (49 - amp * 5 + 1.5 * Math.sin(t * 2.9) - baseR[1]) * g]; openR = g > .5; }
+    let tL = baseL, tR = baseR;
+    const RT = { wave:[null, [88 + 3 * Math.sin(e * 9), 34], 0, 1], cheer:[[42, 30 + 2 * Math.abs(Math.sin(e * 9))], [86, 30 + 2 * Math.abs(Math.sin(e * 9 + 1))], 1, 1],
+      laugh:[[54, 60 - 2.2 * Math.abs(Math.sin(e * 10.5))], [74, 60 - 2.2 * Math.abs(Math.sin(e * 10.5 + 1))], 0, 0], shock:[[52, 44], [76, 44], 1, 1],
+      love:[[60, 50], [68, 50], 0, 0], think:[null, [70, 47], 0, 0], rage:[[50, 58 - 3 * Math.abs(Math.sin(e * 16))], [78, 58 - 3 * Math.abs(Math.sin(e * 16 + 1.5))], 0, 0] }[rk];
+    if (RT) { const mix = (b, x) => x ? [b[0] + (x[0] - b[0]) * w, b[1] + (x[1] - b[1]) * w] : b; tL = mix(baseL, RT[0]); tR = mix(baseR, RT[1]);
+      if (w > .5) { if (RT[0]) openL = !!RT[2]; openR = RT[1] ? !!RT[3] : openR; } }
+    [['l', tL, openL, -1, [15, 34]], ['r', tR, openR, 1, [33, 34]]].forEach(([sd, tg, op, side, sh]) => {
+      const H = A.hand[sd];
+      for (let i = 0; i < 2; i++) { H.v[i] += ((tg[i] - H.p[i]) * 190 - H.v[i] * 21) * dt; H.p[i] += H.v[i] * dt; }
+      const hx = sn(H.p[0]), hy = sn(H.p[1]), S = TP(sh[0], sh[1]);
+      const cx = (S[0] + hx) / 2 + side * 5, cy = (S[1] + hy) / 2 + 2;
+      q('pl-arm-' + sd).setAttribute('d', 'M ' + S[0].toFixed(2) + ' ' + S[1].toFixed(2) + ' Q ' + cx.toFixed(2) + ' ' + cy.toFixed(2) + ' ' + hx + ' ' + hy);
+      q('pl-hand-' + sd).setAttribute('transform', 'translate(' + hx + ' ' + hy + ')');
+      if (A.open[sd] !== op) { q('pl-h' + sd + '-open').setAttribute('display', op ? 'inline' : 'none'); q('pl-h' + sd + '-mitt').setAttribute('display', op ? 'none' : 'inline'); A.open[sd] = op; }
+    });
+    q('pl-led').setAttribute('opacity', (.13 + .06 * Math.sin(t * 1.4)).toFixed(3));
+    q('pl-neon-glow').setAttribute('opacity', (.3 + .12 * Math.sin(t * 2.2) + (Math.sin(t * 17) > .97 ? -.2 : 0)).toFixed(3));
+    q('pl-kb').setAttribute('opacity', (.5 + .5 * Math.sin(t * 2.6)).toFixed(3));
+    STARS.forEach((_, i) => q('pl-star-' + i).setAttribute('opacity', (.45 + .55 * Math.abs(Math.sin(t * (.6 + i * .17) + i))).toFixed(2)));
+    q('pl-plant').setAttribute('transform', 'rotate(' + (1.6 * Math.sin(t * .9)).toFixed(2) + ' 100.5 16)');
+    for (let i = 0; i < 3; i++) { const ph = (t * .32 + i / 3) % 1, el = q('pl-steam-' + i);
+      el.setAttribute('cx', (23 + Math.sin(t * 2 + i * 2) * 1.1).toFixed(2)); el.setAttribute('cy', (51 - ph * 11).toFixed(2)); el.setAttribute('r', (.7 + ph * .9).toFixed(2)); el.setAttribute('opacity', (Math.sin(Math.PI * ph) * .55).toFixed(2)); }
+    for (let i = 0; i < 3; i++) { const ph = (e * .55 + i / 3) % 1, el = q('pl-heart-' + i), on = rk === 'love';
+      el.setAttribute('opacity', on ? (Math.sin(Math.PI * ph) * w).toFixed(2) : '0');
+      if (on) el.setAttribute('transform', 'translate(' + (64 + (i - 1) * 17 + 2 * Math.sin(e * 3 + i) - 2.5).toFixed(2) + ' ' + (28 - ph * 20).toFixed(2) + ')'); }
+  }
+  renderVals() {
+    const HC = HPC[this.props.headphones || 'Green'] || HPC.Green;
+    if (this.stageKey !== HC) { this.stageKey = HC; this.nodes = {}; this.A.x = null; this.A.m = null; this.A.open = { l:null, r:null };
+      this.stageEl = React.createElement('div', { style:{ position:'absolute', inset:0 }, dangerouslySetInnerHTML:{ __html: buildStage(HC) } }); }
+    const on = { bg:'#5FCB88', fg:'#1F3A35' }, off = { bg:'#24403A', fg:'#FFFFFF' };
+    return {
+      stage: this.stageEl,
+      overlay: this.props.overlay ?? true,
+      micMsg: this.state.micMsg,
+      talkBtns: [['sim','Simulated'], ['mic','Microphone'], ['off','Silent']].map(([k, label]) => Object.assign({ label, onClick: () => this.setTalk(k) }, this.state.talk === k ? on : off)),
+      exprBtns: Object.entries(XP).map(([k, x]) => Object.assign({ label:x.label, onClick: () => { this.ctrl.expr = k; this.setState({ expr:k }); } }, this.state.expr === k ? on : off)),
+      rxBtns: Object.entries(RXN).map(([k, x]) => Object.assign({ label:x.label, onClick: () => { this.ctrl.react = k; this.ctrl.rt = performance.now() / 1000; this.setState({ react:k }); } },
+        this.state.react === k ? { bg:'#F08A8A', fg:'#1F3A35' } : off)),
+    };
+  }
+}
+</script>
+</body>
+</html>
